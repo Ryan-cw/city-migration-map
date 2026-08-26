@@ -61,6 +61,7 @@
   .pitem .rtag{display:inline-block;font-size:10.5px;color:#fff;border-radius:6px;padding:2px 7px;margin-left:6px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
   .psep{font-size:11.5px;color:var(--sub);font-weight:700;margin:8px 2px 0}
   .pitem .wtag.on{color:#1e7e34;background:#e2f6e9}
+  .pitem .pwhy{font-size:10.5px;color:var(--sub);margin-top:3px;line-height:1.4;opacity:.92}
   .pitem .pline{font-size:11.5px;color:#4a5768;margin-top:4px;display:flex;gap:6px;align-items:flex-start;line-height:1.45}
   .pitem .pline .pv{flex:0 0 auto;font-size:10px;color:#fff;background:#27ae60;border-radius:4px;padding:1px 6px;font-weight:800;margin-top:1px}
   .pitem .pline.wk .pv{background:#c0392b}
@@ -891,12 +892,12 @@ function renderResult(){
     ${cityPanel(D,"到达")}
     </div>`;
 }
-/* 四季旅居城市榜单（用户提供）：[城市, 最佳细分窗口, 评级] */
+/* 四季旅居城市榜单（依据《旅居养老月份推荐》文档更新）：[城市, 最佳细分窗口, 评级, 简要原因] */
 const SEASON_RANK = {
-  春: [["上海","4月上–5月下","S++"],["昆明","3–5月","S++"],["成都","3月中–4月底","S++"],["南京","4月–5月中","S+"],["杭州","4月–5月初","S+"],["北京","4月中–5月","S+"],["西安","4月–5月初","S"],["武汉","3月下–4月","S"],["长沙","3月–4月","S"],["厦门","2月下–3月","A+/S-"]],
-  夏: [["大连","6月中–8月下","S++"],["青岛","6月下–8月底","S++"],["昆明","6–8月","S+"],["贵阳","6–8月","S+"],["威海","7–8月","S+"],["烟台","7–8月","S+"]],
-  秋: [["上海","9月下–11月上","S++"],["南京","10–11月","S+"],["杭州","9月下–11月中","S+"],["北京","9月中–10月底","S++"],["成都","9–11月","S+"],["长沙","9月下–11月上","S"],["武汉","9月下–10月底","S"],["西安","9月中–10月底","S"],["昆明","9–11月","S+"],["常德","9月下–11月上","S"]],
-  冬: [["深圳","12月–2月","S++"],["广州","12月–2月","S++"],["珠海","12月–2月","S++"],["厦门","12月–2月下","S+"],["海口","12–2月","S+"],["三亚","11月下–3月","S"],["福州","12月–2月","S"],["汕头","12月–2月","S"],["泉州","12月–2月","A+/S-"],["北海","12–2月","A+"]]
+  春: [["上海","3月下旬–5月上旬","S+","江南春暖花开，避梅雨与酷暑"],["昆明","3月–5月","S++","四季如春，3–5月全年最舒适"],["成都","3月下旬–5月","S+","春暖少雨，避开盛夏闷热"],["南京","4月–5月上旬","S+","春和景明，避7–8月酷暑"],["杭州","3月下旬–5月上旬","S+","西湖春景，春季优于夏季"],["北京","4月下旬–5月底","S+","春花烂漫，避风沙与寒冬"],["西安","4月–5月中旬","S+","春秋最舒适，避夏热冬冷"],["武汉","3月下旬–5月上旬","S+","樱花季气候佳，避盛夏酷暑"],["长沙","3月下旬–5月上旬","S+","春暖宜人，避6–9月湿热"],["厦门","3月–4月","S+","冬春温暖，避台风与盛夏"]],
+  夏: [["大连","6月中旬–9月中旬","S++","海滨避暑，盛夏最舒适"],["青岛","6月中旬–9月下旬","S++","海滨盛夏，浴场资源成熟"],["昆明","6–9月","S","高原凉夏，微雨无酷暑"],["贵阳","6月中旬–9月","S++","中国凉都，盛夏避暑S++"],["威海","6月中旬–9月上旬","S++","海风清爽，盛夏养老S++"],["烟台","6月中旬–9月中旬","S++","海滨避暑，9月最舒服"],["呼和浩特","6月中旬–9月上旬","S++","干爽草原，避全国酷暑"]],
+  秋: [["上海","10月中旬–11月底","S++","金秋最舒适，避梅雨高温"],["南京","10月–11月中旬","S++","秋高气爽，避7–8月"],["杭州","9月下旬–11月中旬","S++","桂花季，秋景全年最佳"],["北京","9月上旬–10月中旬","S++","全年最漂亮舒适的季节"],["成都","9月下旬–11月上旬","S+","秋高气爽，避盛夏"],["长沙","10月中旬–11月底","S+","10–11月最佳，避湿热"],["武汉","10月–11月中旬","S++","秋凉舒适，避盛夏"],["西安","9月中旬–10月底","S+","秋爽宜人，避夏热冬冷"],["昆明","9月–11月","S++","秋燥舒适，全年适住"],["常德","10月–11月中旬","S++","秋返乡佳，避7–8月"]],
+  冬: [["深圳","11月–3月","S++","温暖过冬，长期大本营"],["广州","11月–3月","S+","医疗强，冬季暖"],["珠海","11月–3月","S++","滨海冬暖，空气流通好"],["厦门","11月–4月","S++","冬春温暖，避寒优选"],["海口","11月–3月","S+","冬季暖，略湿于三亚"],["三亚","11月下旬–3月底","S++","全国冬季S++，避寒王者"],["福州","10月下旬–12月、3月–4月","S","冬春尚可，盛夏湿热"],["汕头","11月–3月","S++","粤东冬暖，适合避寒"],["泉州","11月–4月","S++","冬春温暖，烟火气足"],["北海","11–12月、3–4月上旬","S+","冬春宜人，1–2月偏湿冷"]]
 };
 function rankColor(r){
   if(r==="S++") return "#d4a017";
@@ -911,13 +912,14 @@ function renderPin(){
   const ranked=rank.map(r=>r[0]);
   hint.textContent = `当前 ${new Date().getMonth()+1} 月（${curSeason}季）· 当季旅居城市排名（榜单 ${rank.length} 城，金/银/铜为前三）；点任意一行即可设为目的地。`;
   const medal=["#d4a017","#9aa5b1","#b87333"];
-  const pitem=(c,badge,extra,right)=>{
+  const pitem=(c,badge,extra,right,why)=>{
     const r=getRoute(byName[curBase],c);
     const best=r&&r.best? `${r.best.mode} ${fmtH(r.best.door)}` : "—";
     return `<div class="pitem" data-c="${c.name}">
       ${badge}
       <div class="pinfo">
         <div class="pn">${c.name}${extra}</div>
+        ${why?`<div class="pwhy">${why}</div>`:""}
         <div class="pline"><span class="pv">优势</span><span>${c.str}</span></div>
         <div class="pline wk"><span class="pv">短板</span><span>${c.weak}</span></div>
       </div>
@@ -929,7 +931,7 @@ function renderPin(){
     const badge=`<span class="rank" style="background:${i<3?medal[i]:'#2f80ed'}">${i+1}</span>`;
     const extra=`${it[2]?`<span class="rtag" style="background:${rankColor(it[2])}">${it[2]}</span>`:""}${it[1]?`<span class="wtag on">窗口 ${it[1]}</span>`:""}`;
     const open = c.name===dest;   /* 目的地行就地展开该城气温模块 */
-    return pitem(c,badge,extra,"") +
+    return pitem(c,badge,extra,"",it[3]) +
       (open? `<div class="pinwx" id="pinwx_${c.name}"></div>` : "");
   }).join("");
   row.querySelectorAll(".pitem").forEach(el=>el.addEventListener("click",()=>{
@@ -2038,7 +2040,7 @@ function tempBandSVG(y, name, pfx){ pfx=pfx||"";
       seg+=`<rect x="${x.toFixed(1)}" y="${(base-acc-h).toFixed(1)}" width="${colW.toFixed(1)}" height="${h.toFixed(1)}" fill="${b.c}" rx="1.5"><title>${b.label} ${v}天</title></rect>`;
       acc+=h;
     });
-    cols+=`<g class="mb" data-y="${y.year}" data-m="${i+1}" style="cursor:pointer"><title>点击展开 ${y.year}年${i+1}月逐日气温波动</title>${seg}</g>`;
+    cols+=`<g class="mb" data-y="${y.year}" data-m="${i}" style="cursor:pointer"><title>点击展开 ${y.year}年${i+1}月逐日气温波动</title>${seg}</g>`;
     xl+=`<text x="${(x+colW/2).toFixed(1)}" y="${H-5}" font-size="8" fill="#9aa5b1" text-anchor="middle">${i+1}月</text>`;
   });
   const lg=bands.map(b=>`<span class="lg2"><i style="background:${b.c}"></i>${b.label}</span>`).join("");
